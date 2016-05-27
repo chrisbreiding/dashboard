@@ -27,7 +27,7 @@ module.exports =
       @get('shareWindow').close()
       @set 'shareWindow', null
     else if !@get('shareWindow')
-      @set 'shareWindow', window.open('http://appear.in/cypress', 'Cypress appear.in Room')
+      @set 'shareWindow', window.open('https://appear.in/cypress', 'Cypress appear.in Room')
 
   sound: (data)->
     sound = sounds[data.sound] or data.sound
