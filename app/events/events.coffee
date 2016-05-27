@@ -22,6 +22,13 @@ module.exports =
     else
       panesController.send 'showPaneIds'
 
+  share: (data)->
+    if data.end and @get('shareWindow')
+      @get('shareWindow').close()
+      @set 'shareWindow', null
+    else if !@get('shareWindow')
+      @set 'shareWindow', window.open('http://appear.in/cypress', 'Cypress appear.in Room')
+
   sound: (data)->
     sound = sounds[data.sound] or data.sound
     @get('controllers.application').send 'playSound', sound
