@@ -41,7 +41,7 @@ App.PusherController = Ember.Controller.extend
     @_resubscribeToChannel channelName.toLowerCase()
 
   _channelNameFromSettings: ->
-    @store.fetch('slackChannelName').toLowerCase()
+    (@store.fetch('slackChannelName') || '').toLowerCase()
 
   _subscribeToChannel: (channelName)->
     if channelName

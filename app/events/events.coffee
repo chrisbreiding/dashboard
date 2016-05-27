@@ -1,12 +1,12 @@
 require './image/route'
-require './standup/route'
 require './text/route'
 require './url/route'
 require './youtube/route'
 
+sounds = require '../shared/sounds'
+
 module.exports =
   image: ['url', 'duration']
-  standup: ['duration']
   text: ['text', 'sender', 'duration']
   url: ['url', 'duration']
   youtube: ['id']
@@ -23,4 +23,5 @@ module.exports =
       panesController.send 'showPaneIds'
 
   sound: (data)->
-    @get('controllers.application').send 'playSound', data.url
+    sound = sounds[data.sound] or data.sound
+    @get('controllers.application').send 'playSound', sound

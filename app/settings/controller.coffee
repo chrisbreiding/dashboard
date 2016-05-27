@@ -7,7 +7,7 @@ App.SettingsController = Ember.ObjectController.extend
 
   content: {}
 
-  keys: ['pusherApiKey', 'slackChannelName', 'standupUrl']
+  keys: ['pusherApiKey', 'slackChannelName']
 
   setup: (->
     @_initValue key for key in @get('keys')

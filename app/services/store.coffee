@@ -14,6 +14,10 @@ Store = Ember.Object.extend
     localStorage[App.NAMESPACE] = JSON.stringify @data
     value
 
+  remove: (key)->
+    delete @data[key]
+    localStorage[App.NAMESPACE] = JSON.stringify @data
+
 Ember.Application.initializer
   name: 'store'
 
