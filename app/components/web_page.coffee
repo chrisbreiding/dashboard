@@ -17,7 +17,9 @@ App.WebPageComponent = Ember.Component.extend
   frameborder: 0
   marginheight: 0
   marginwidth: 0
-  scrolling: 'no'
+  scrolling: (->
+    if @get('scrollable') then 'yes' else 'no'
+  ).property 'scrollable'
 
   sandbox: (->
     if @get 'sandboxed'

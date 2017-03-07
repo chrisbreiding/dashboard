@@ -12,6 +12,7 @@ Pane = Ember.Object.extend
     id: @get 'id'
     url: @get('url') ? ''
     sandboxed: @get('sandboxed') ? false
+    scrollable: @get('scrollable') ? false
     properties: Property.serialize @get('properties')
 
 Pane.reopenClass
@@ -28,6 +29,7 @@ Pane.reopenClass
       id: highestId + 1
       url: ''
       sandboxed: true
+      scrollable: false
       isNew: true
       properties: [
         { name: 'top', value: '20px' }
