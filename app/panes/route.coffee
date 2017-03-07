@@ -18,7 +18,8 @@ require '../settings/settings'
 App.PanesRoute = Ember.Route.extend
 
   model: ->
-    Pane.deserialize @store.fetch('panes')
+    @store.fetch('panes').then (panes) ->
+      Pane.deserialize(panes)
 
   setupController: (controller, model)->
     @_super controller, model

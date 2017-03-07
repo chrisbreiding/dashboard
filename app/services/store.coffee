@@ -1,22 +1,54 @@
+_ = require 'lodash'
 Ember = require 'ember'
 App = require '../app'
 
+Promise = Ember.RSVP.Promise
+
+localData = JSON.parse(localStorage[App.NAMESPACE] or '{}')
+
+local =
+  fetch: (keyOrArray) ->
+    value = if _.isArray(keyOrArray)
+      _.map keyOrArray, (key) -> localData[key]
+    else
+      localData[keyOrArray]
+    Promise.resolve(value)
+
+  save: (key, value) ->
+    localData[key] = value
+    @_save()
+    Promise.resolve(value)
+
+  remove: (key) ->
+    delete localData[key]
+    @_save()
+    Promise.resolve()
+
+  _save: ->
+    localStorage[App.NAMESPACE] = JSON.stringify(localData)
+
+remote = {}
+
 Store = Ember.Object.extend
 
-  init: ->
-    @data = JSON.parse(localStorage[App.NAMESPACE] or '{}')
+  fetch: (key) ->
+    @_getStore().then (store) -> store.fetch(key)
 
-  fetch: (key)->
-    @data[key]
+  save: (key, value) ->
+    @_getStore().then (store) -> store.save(key, value)
 
-  save: (key, value)->
-    @data[key] = value
-    localStorage[App.NAMESPACE] = JSON.stringify @data
-    value
+  remove: (key) ->
+    @_getStore().then (store) -> store.remove(key)
 
-  remove: (key)->
-    delete @data[key]
-    localStorage[App.NAMESPACE] = JSON.stringify @data
+  local: local
+
+  _getStore: ->
+    if @_store
+      Promise.resolve(@_store)
+    else
+      local.fetch(['firebaseName', 'firebaseKey']).then ([name, key]) ->
+        persistRemotely = name? and key?
+        @_store = if persistRemotely then remote else local
 
 Ember.Application.initializer
   name: 'store'

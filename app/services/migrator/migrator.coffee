@@ -6,19 +6,18 @@ migrations = require './manifest'
 module.exports = Ember.Object.extend
 
   runMigrations: ->
-    new Ember.RSVP.Promise (resolve)=>
-      currentVersion = @_currentVersion()
-      return resolve() if currentVersion is App.VERSION
+    @_currentVersion().then (currentVersion) =>
+      return if currentVersion is App.VERSION
 
       versions = @_getVersionsSince currentVersion
       operations = (@_runMigration version for version in versions)
 
       Ember.RSVP.all(operations).then =>
-        @get('store').save 'appVersion', App.VERSION
-        resolve()
+        @get('store').local.save 'appVersion', App.VERSION
 
   _currentVersion: ->
-    @get('store').fetch('appVersion') or '0.0.0'
+    @get('store').local.fetch('appVersion').then (version) ->
+      version ? '0.0.0'
 
   _getVersionsSince: (currentVersion)->
     versionAssistant = VersionAssistant.create versions: Object.keys(migrations)

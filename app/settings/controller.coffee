@@ -14,16 +14,16 @@ App.SettingsController = Ember.ObjectController.extend
   ).on 'init'
 
   _initValue: (key)->
-    value = @store.fetch key
-    @set key, value
-    @set "original_#{key}", value
+    @store.fetch(key).then (value) =>
+      @set key, value
+      @set "original_#{key}", value
 
   _saveAndBroadcastValue: (key)->
     value = @get key
     if value isnt @get("original_#{key}")
       @set "original_#{key}", value
-      @store.save key, value
-      App.eventBus.trigger "#{key}Updated", value
+      @store.save(key, value).then ->
+        App.eventBus.trigger "#{key}Updated", value
 
   actions:
 
