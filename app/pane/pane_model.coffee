@@ -10,8 +10,8 @@ Pane = Ember.Object.extend
 
   serialize: ->
     id: @get 'id'
-    url: @get 'url'
-    sandboxed: @get 'sandboxed'
+    url: @get('url') ? ''
+    sandboxed: @get('sandboxed') ? false
     properties: Property.serialize @get('properties')
 
 Pane.reopenClass

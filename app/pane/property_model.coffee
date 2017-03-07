@@ -5,8 +5,8 @@ _ = require 'lodash'
 Property = Ember.Object.extend
 
   serialize: ->
-    name: @get 'name'
-    value: @get 'value'
+    name: @get('name') ? ''
+    value: @get('value') ? ''
 
 Property.reopenClass
 

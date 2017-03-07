@@ -5,7 +5,8 @@
     "handlebars": "~1.1.2",
     "jquery": "~2.1.1",
     "lodash": "~2.4.1",
-    "uuid": "~1.4.1"
+    "uuid": "~1.4.1",
+    "firebase": "~3.7.0"
   },
   "devDependencies": {
     "browserify": "~4.1.6",

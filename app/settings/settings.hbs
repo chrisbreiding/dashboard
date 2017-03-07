@@ -10,6 +10,18 @@
     {{input value=slackChannelName}}
   </fieldset>
 
+  <p>Leave following blank to use local storage</p>
+
+  <fieldset>
+    <label>Firebase App Name</label>
+    {{input value=firebaseName}}
+  </fieldset>
+
+  <fieldset>
+    <label>Firebase API Key</label>
+    {{input value=firebaseKey}}
+  </fieldset>
+
   <div class="settings-actions clearfix">
     <button class="save action" type="submit">Save</button>
     <button class="neutral" {{action 'cancel'}}>Cancel</button>

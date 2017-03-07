@@ -8,7 +8,8 @@ require './controller'
 App.ApplicationRoute = Ember.Route.extend
 
   beforeModel: ->
-    Migrator.create(store: @store).runMigrations()
+    @store.setup().then =>
+      Migrator.create(store: @store).runMigrations()
 
   afterModel: ->
     @controllerFor('pusher').setupEvents()
